@@ -1,0 +1,152 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Structure with FastAPI and MongoDB",
+        "description": "Initialize the project with FastAPI framework and MongoDB connection setup",
+        "details": "1. Create a new Python project with virtual environment\n2. Install required packages: fastapi, uvicorn, motor (MongoDB async driver), pydantic, python-jose (for JWT), passlib (for password hashing)\n3. Set up project structure with directories for routes, models, services, and utils\n4. Configure MongoDB connection using motor\n5. Create basic FastAPI app with health check endpoint\n6. Set up environment variables for configuration\n7. Implement CORS middleware\n8. Create a Docker setup for development environment",
+        "testStrategy": "1. Verify health check endpoint returns 200 OK\n2. Test MongoDB connection by performing a simple query\n3. Validate environment variable loading\n4. Ensure Docker container builds and runs correctly",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Implement User Authentication System",
+        "description": "Create user registration, login, and authentication system with JWT",
+        "details": "1. Create User model with fields: id, username, email, password_hash, preferences, created_at, updated_at\n2. Implement password hashing using passlib\n3. Create user registration endpoint (/auth/register)\n4. Implement login endpoint that returns JWT token (/auth/login)\n5. Create JWT token generation and validation utilities\n6. Implement authentication middleware to protect routes\n7. Add refresh token functionality\n8. Create endpoint for password reset\n9. Add user profile endpoint to get/update user information",
+        "testStrategy": "1. Test user registration with valid and invalid data\n2. Verify login returns valid JWT token\n3. Test protected routes with and without valid tokens\n4. Verify password hashing works correctly\n5. Test token refresh functionality\n6. Validate user profile updates",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Design and Implement Data Models",
+        "description": "Create Pydantic models for all entities in the system including User, Room, Preference, and Activity",
+        "details": "1. Define User model with fields for authentication and profile information\n2. Create Room model with fields: id, name, description, creator_id, members, created_at, updated_at\n3. Define Preference model with fields: id, user_id, category (food, activity, etc.), items (list of preferences), ratings\n4. Create Activity model for scheduled activities: id, room_id, type, location, start_time, end_time, description\n5. Implement MongoDB schema validation\n6. Create Pydantic models for request/response validation\n7. Add relationships between models\n8. Implement data validation rules",
+        "testStrategy": "1. Validate model constraints with valid and invalid data\n2. Test serialization/deserialization of models\n3. Verify relationships between models\n4. Test MongoDB schema validation\n5. Ensure all required fields are properly enforced",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Implement Room Management API",
+        "description": "Create endpoints for creating, joining, and managing rooms",
+        "details": "1. Implement endpoint to create a new room (/rooms/create)\n2. Create endpoint to list all rooms a user is part of (/rooms)\n3. Implement endpoint to get room details (/rooms/{room_id})\n4. Create endpoint to join a room using invite code or direct link (/rooms/{room_id}/join)\n5. Implement endpoint to leave a room (/rooms/{room_id}/leave)\n6. Create endpoint to update room details (/rooms/{room_id})\n7. Implement endpoint to delete a room (/rooms/{room_id})\n8. Add functionality to manage room members (add/remove)\n9. Implement room invitation system",
+        "testStrategy": "1. Test room creation with various parameters\n2. Verify room joining functionality works with different scenarios\n3. Test room listing and filtering\n4. Validate room update operations\n5. Test member management operations\n6. Verify room deletion and cleanup\n7. Test invitation system",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Implement User Preference Management",
+        "description": "Create API endpoints for users to set and update their activity and food preferences",
+        "details": "1. Design preference data structure (categories, ratings, etc.)\n2. Implement endpoint to get user preferences (/users/preferences)\n3. Create endpoint to update user preferences (/users/preferences)\n4. Implement category-specific preference endpoints (food, activities, etc.)\n5. Add functionality to batch update preferences\n6. Create preference templates for quick selection\n7. Implement preference history tracking\n8. Add validation for preference data\n9. Create endpoints for preference suggestions based on past choices",
+        "testStrategy": "1. Test preference creation with valid and invalid data\n2. Verify preference updates are correctly stored\n3. Test category-specific preference operations\n4. Validate batch updates\n5. Test preference history tracking\n6. Verify preference templates work correctly",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Implement Schedule Recommendation Algorithm",
+        "description": "Create an algorithm to recommend optimal activity schedules based on group preferences",
+        "details": "1. Design algorithm to analyze preferences of all room members\n2. Implement weighted scoring system for activities based on preferences\n3. Create time-slot allocation algorithm\n4. Implement activity sequencing logic (e.g., food before activities)\n5. Add duration estimation for activities\n6. Create fallback recommendations for when preferences conflict\n7. Implement caching for recommendation results\n8. Add randomization factor to avoid repetitive recommendations\n9. Create utility functions for preference aggregation and analysis",
+        "testStrategy": "1. Test recommendation algorithm with various preference combinations\n2. Verify time slot allocation works correctly\n3. Test activity sequencing logic\n4. Validate preference weighting system\n5. Test with conflicting preferences\n6. Measure algorithm performance and optimize if needed\n7. Verify caching mechanism",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          5
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Create Schedule Generation API",
+        "description": "Implement API endpoints for generating and managing activity schedules for rooms",
+        "details": "1. Create endpoint to generate schedule recommendations (/rooms/{room_id}/schedule/recommend)\n2. Implement endpoint to save a schedule (/rooms/{room_id}/schedule)\n3. Create endpoint to get saved schedules (/rooms/{room_id}/schedules)\n4. Implement endpoint to update a schedule (/rooms/{room_id}/schedules/{schedule_id})\n5. Add endpoint to delete a schedule (/rooms/{room_id}/schedules/{schedule_id})\n6. Implement schedule sharing functionality\n7. Create endpoint for schedule voting/approval by room members\n8. Add schedule templates for common scenarios (half-day, full-day, evening)",
+        "testStrategy": "1. Test schedule generation with various room configurations\n2. Verify saved schedules can be retrieved correctly\n3. Test schedule updates and validation\n4. Validate schedule deletion\n5. Test schedule sharing functionality\n6. Verify voting/approval system\n7. Test schedule templates",
+        "priority": "medium",
+        "dependencies": [
+          4,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Implement Automatic Preference Learning",
+        "description": "Create a system to automatically update user preferences based on their activity history",
+        "details": "1. Design data structure for tracking user activity engagement\n2. Implement logic to analyze user feedback on activities\n3. Create algorithm to adjust preferences based on activity participation\n4. Implement preference strength decay over time for unused preferences\n5. Add system to detect preference patterns\n6. Create feedback collection endpoints after activities\n7. Implement batch preference update job\n8. Add preference change notification system\n9. Create admin dashboard for monitoring preference trends",
+        "testStrategy": "1. Test preference adjustment with various feedback scenarios\n2. Verify preference decay works correctly\n3. Test pattern detection with simulated data\n4. Validate feedback collection endpoints\n5. Test batch update job\n6. Verify notification system\n7. Test admin dashboard functionality",
+        "priority": "low",
+        "dependencies": [
+          5,
+          7
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Implement API Documentation and Testing",
+        "description": "Create comprehensive API documentation and implement automated testing",
+        "details": "1. Set up Swagger/OpenAPI documentation using FastAPI's built-in support\n2. Write detailed descriptions for all endpoints\n3. Create example requests and responses\n4. Implement unit tests for all services and utilities\n5. Create integration tests for API endpoints\n6. Set up CI/CD pipeline for automated testing\n7. Implement performance testing for recommendation algorithm\n8. Create postman collection for manual testing\n9. Add rate limiting and API usage monitoring",
+        "testStrategy": "1. Verify all endpoints are properly documented\n2. Test documentation examples work correctly\n3. Run unit tests and ensure good coverage\n4. Execute integration tests against test database\n5. Verify CI/CD pipeline correctly runs all tests\n6. Test rate limiting functionality",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Prepare for Future Map API Integration",
+        "description": "Design and implement the foundation for future map API integration for location-based recommendations",
+        "details": "1. Research available map APIs (Google Maps, OpenStreetMap, etc.)\n2. Design data structure for storing location information\n3. Create location model with coordinates, address, type, etc.\n4. Implement placeholder endpoints for location-based recommendations\n5. Add location fields to activity and preference models\n6. Create utility functions for distance calculation\n7. Implement location search functionality (to be connected to map API later)\n8. Design caching strategy for location data\n9. Create documentation for future map API integration",
+        "testStrategy": "1. Verify location model works with test data\n2. Test placeholder endpoints return expected responses\n3. Validate distance calculation utilities\n4. Test location search with mock data\n5. Verify caching strategy works as expected\n6. Review documentation for completeness",
+        "priority": "low",
+        "dependencies": [
+          3,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-11T10:54:04.071Z",
+      "updated": "2025-07-11T10:54:04.071Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
